@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes" />
+    <title>Lì Xì 2026</title>
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        /* Cho phép cuộn trang */
+        body, html { 
+            margin: 0; padding: 0; width: 100%; 
+            min-height: 100vh; 
+            background-color: #f5f5f5; 
+            font-family: sans-serif; 
+            overflow-x: hidden; /* Chặn cuộn ngang */
+        }
+
+        /* GIAO DIỆN 1: BAO LÌ XÌ ĐỎ */
+        #lixi-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #d32f2f;
+            display: flex; flex-direction: column; align-items: center;
+            z-index: 100; transition: 0.8s ease-in-out;
+        }
+
+        .body-lixi {
+            position: relative; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: #ffca28;
+        }
+
+        .flap {
+            position: absolute; top: 0; width: 100%; height: 25%;
+            background-color: #b71c1c;
+            border-bottom-left-radius: 50% 100%;
+            border-bottom-right-radius: 50% 100%;
+            z-index: 102; transition: transform 0.6s ease-in;
+            transform-origin: top;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .open-btn {
+            position: absolute; top: 20%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px; height: 100px;
+            background: radial-gradient(circle, #ffd700, #ffb900);
+            border: 4px solid #b8860b; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 40px; font-weight: bold; color: #b71c1c;
+            z-index: 103; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: bounce 1.2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* GIAO DIỆN 2: KHI ĐÃ MỞ (Có thể kéo xuống) */
+        #result-screen {
+            display: none; /* Ẩn lúc đầu */
+            width: 100%;
+            min-height: 100vh;
+            background-color: #fff;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        video {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        /* Hiệu ứng chuyển cảnh */
+        .is-open #lixi-screen { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <div id="lixi-screen">
+        <div class="flap"></div>
+        <div class="open-btn" onclick="startOpen()">🌸</div>
+        <div class="body-lixi">
+            <h1 style="font-size: 150px; margin: 0; opacity: 0.1;">🐎</h1>
+            <h2 style="font-size: 1.8rem;">CHÚC MỪNG NĂM MỚI</h2>
+            <p>Chạm vào bao lì xì để mở quà</p>
+        </div>
+    </div>
+
+    <div id="result-screen">
+        <h2 style="color: #d32f2f;">🧧 QUÀ CỦA BẠN ĐÂY 🧧</h2>
+        
+        <video id="vid1" controls autoplay muted playsinline loop>
+            <source src="https://www.dropbox.com/scl/fi/4embowsnzt8vr2sayamx4/lv_0_20260207065542.mp4?rlkey=00gj67hng63t6cljo8hgh4y9c&st=rug6ztmn&raw=1" type="video/mp4">
+        </video>
+
+        <p style="padding: 20px; font-size: 1.1rem; color: #333;">
+            Chúc bạn một năm mới bình an, vạn sự như ý!<br>
+            Hãy kéo xuống để xem thêm.
+        </p>
+
+        <div style="height: 100px;"></div>
+
+        <button 
+            onclick="location.reload()" 
+            style="margin-bottom: 50px; padding: 15px 35px; border: none; background: #d32f2f; color: #fff; border-radius: 30px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+            Mở lại cái khác
+        </button>
+    </div>
+
+    <script>
+        function startOpen() {
+            const screen1 = document.getElementById('lixi-screen');
+            const screen2 = document.getElementById('result-screen');
+            const video = document.getElementById('vid1');
+
+            // Hiệu ứng bốc hơi màn hình đỏ
+            document.body.classList.add('is-open');
+
+            setTimeout(() => {
+                screen1.style.display = 'none';
+                screen2.style.display = 'flex';
+                
+                // MẸO: Bật âm thanh ngay khi chuyển cảnh vì người dùng đã tương tác (click)
+                video.muted = false;
+                video.play();
+            }, 800);
+        }
+    </script>
+</body>
+</html>
